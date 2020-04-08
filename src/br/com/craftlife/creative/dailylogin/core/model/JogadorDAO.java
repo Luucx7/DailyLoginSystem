@@ -140,6 +140,9 @@ public class JogadorDAO {
 	// Calculate the prizes to give
 	public static void calcPrizes(Jogador jog, int days) {
 		givePrizes(jog.getPlayer(), config.getInt("prizes.day"+days+".money"), config.getInt("prizes.day"+days+"dust"), config.getInt("prizes.day"+days+".box.qntd"), config.getInt("prizes.day"+days+".box.lvl"));
+		if (days>=7 & config.getBoolean("prizes.day7.special.enable")) {
+			Bukkit.dispatchCommand(Bukkit.getConsoleSender(), config.getString("prizes.day7.special.command"));
+		}
 	}
 	
 	// Prizes method
