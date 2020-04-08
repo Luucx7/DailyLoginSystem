@@ -13,17 +13,19 @@ import br.com.craftlife.creative.dailylogin.Main;
 import br.com.craftlife.creative.dailylogin.core.json.JSON;
 import br.com.craftlife.creative.dailylogin.core.model.Jogador;
 import br.com.craftlife.creative.dailylogin.core.model.JogadorDAO;
+import br.com.craftlife.creative.dailylogin.visual.guis.LoginsGUI;
 
 public class Logins implements Listener, CommandExecutor {
 	
 	private String pluginFolder = Main.getMain().pluginFolder;
 	
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-		if (args.length==0) {
-			// TODO: Login Streak GUI
+		if (args.length==0 && sender instanceof Player) {
+			Player p = (Player) sender;
+			LoginsGUI.v1_15(p, JogadorDAO.getJogador(p).getDaysSequence());
 		}
 		else if (args[0].equalsIgnoreCase("check") && args.length>=2 && sender.hasPermission("logins.check")) {
-			Player p = Bukkit.getPlayerExact(args[0]);
+			Player p = Bukkit.getPlayerExact(args[1]);
 			if (p!=null) {
 				File f = new File(pluginFolder + File.separator+"player_data"+File.separator + p.getName() + ".json"); 
 				if(f.exists() && f.isFile()) {
@@ -53,9 +55,6 @@ public class Logins implements Listener, CommandExecutor {
 			} else {
 				sender.sendMessage("§cJogador não encontrado.");
 			}
-		}
-		else if (args[0].equalsIgnoreCase("set") && args.length>=2 && sender.hasPermission("logins.set")) {
-			
 		}
 		return false;
 	}

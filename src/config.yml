@@ -44,7 +44,28 @@ prizes:
         box:
             qntd: 1
             lvl: 1
+        special:
+            enable: false
+            text: ""
+            command: ""
 #
 # Configurações de mensagens
+#   Não funcionando ainda
+#messages:
+    
 #
-messages:
+# Configurações de GUIs
+#
+guis:
+    header:
+        main: "&a&lSequência de Logins"
+    itens:
+        day1: "&2&l1º Dia"
+        day2: "&2&l2º Dia"
+        day3: "&2&l3º Dia"
+        day4: "&2&l4º Dia"
+        day5: "&2&l5º Dia"
+        day6: "&2&l6º Dia"
+        day7: "&2&l7º Dia"
+        super: "&4&lPrêmio Especial"
+        about: "&6&lSobre"

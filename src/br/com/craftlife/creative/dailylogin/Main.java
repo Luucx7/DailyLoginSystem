@@ -10,6 +10,7 @@ import br.com.craftlife.creative.dailylogin.commands.Coins;
 import br.com.craftlife.creative.dailylogin.commands.Logins;
 import br.com.craftlife.creative.dailylogin.core.model.Jogador;
 import br.com.craftlife.creative.dailylogin.events.Login;
+import br.com.craftlife.creative.dailylogin.visual.events.LoginsEvents;
 import br.com.craftlife.creative.dailylogin.Main;
 
 public class Main extends JavaPlugin implements Listener {
@@ -29,6 +30,7 @@ public class Main extends JavaPlugin implements Listener {
 		
 		// Events
 		this.getServer().getPluginManager().registerEvents(new Login(), this);
+		this.getServer().getPluginManager().registerEvents(new LoginsEvents(), this);
 	}
 	
 	public static Main getMain() {
