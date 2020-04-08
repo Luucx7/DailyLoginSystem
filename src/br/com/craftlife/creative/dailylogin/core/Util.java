@@ -25,7 +25,7 @@ public class Util {
 	
 	public static String getString(String path) {
 		String msg = null;
-		msg = config.getString(ChatColor.translateAlternateColorCodes('&', path));
+		msg = ChatColor.translateAlternateColorCodes('&', config.getString(path));
 		return msg;
 	}
 	
@@ -34,24 +34,31 @@ public class Util {
 		switch(n) {
 		case 1:
 			dia = "primeiro";
+			break;
 		case 2:
 			dia = "segundo";
+			break;
 		case 3:
 			dia = "terceiro";
+			break;
 		case 4:
 			dia = "quarto";
+			break;
 		case 5:
 			dia = "quinto";
+			break;
 		case 6:
 			dia = "sexto";
+			break;
 		case 7:
 			dia = "sétimo";
+			break;
 		case 8:
 			dia = "oitavo";
+			break;
 		case 9:
 			dia = "nono";
-		case 10:
-			dia = "décimo";
+			break;
 		}
 		return dia;
 	}

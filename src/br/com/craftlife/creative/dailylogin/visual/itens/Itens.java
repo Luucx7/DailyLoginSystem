@@ -19,9 +19,11 @@ public class Itens {
 	
 	public static ItemStack itens(Material itemn, String name, ArrayList<String> loree, boolean glow) {
 		ItemStack item = new ItemStack(itemn);
-		ItemMeta item_meta = item.getItemMeta();
-		if (glow=true) {
+		if (glow) {
 			item.addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 1);
+		}
+		ItemMeta item_meta = item.getItemMeta();
+		if (glow) {
 			item_meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
 		}
 		item_meta.setLore(loree);
@@ -31,9 +33,11 @@ public class Itens {
 	}
 	public static ItemStack itens_nl(Material itemn, String name, boolean glow) {
 		ItemStack item = new ItemStack(itemn);
-		ItemMeta item_meta = item.getItemMeta();
-		if (glow=true) {
+		if (glow) {
 			item.addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 1);
+		}
+		ItemMeta item_meta = item.getItemMeta();
+		if (glow) {
 			item_meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
 		}
 		item_meta.setDisplayName(name);

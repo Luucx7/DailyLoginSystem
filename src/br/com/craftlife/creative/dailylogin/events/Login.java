@@ -20,29 +20,31 @@ public class Login implements Listener {
 	
 	@EventHandler
 	public void onJoin(PlayerJoinEvent ev) {
-		// Temporary
-		if (ev.getPlayer().hasPermission("logins.receive")) {
-		
-		File f = new File(pluginFolder + File.separator+"player_data"+File.separator + ev.getPlayer().getName() + ".json"); 
-		if(f.exists() && f.isFile()) {
-			JSON json = new JSON();
-			json.readJSON(ev.getPlayer().getName(), File.separator+"player_data"+File.separator, ev.getPlayer().getName());
-			
-			Jogador jog = new Jogador();
-			
-			do {
-				jog = JogadorDAO.getJogador(ev.getPlayer());
-			} while(jog==null);
-			
-			JogadorDAO.checkDates(JogadorDAO.getJogador(ev.getPlayer()));
-			
-			MessagesManager.loginMsg(jog.getPlayer(), jog.getDaysSequence());
-		} else {
-			JogadorDAO.setFirstData(ev.getPlayer());
-			JogadorDAO.givePrizes(ev.getPlayer(), config.getInt("prizes.day1.money"), config.getInt("prizes.day1.dust"), config.getInt("prizes.day1.box.qntd"), config.getInt("prizes.day1.box.lvl"));
-			MessagesManager.firstLogin(ev.getPlayer());
-		}
-	}
-	// Temporary
+		try {
+			// Temporary
+			if (ev.getPlayer().hasPermission("logins.receive")) {
+
+				File f = new File(pluginFolder + File.separator+"player_data"+File.separator + ev.getPlayer().getName() + ".json"); 
+				if(f.exists() && f.isFile()) {
+					JSON json = new JSON();
+					json.readJSON(ev.getPlayer().getName(), File.separator+"player_data"+File.separator, ev.getPlayer().getName());
+
+					Jogador jog = new Jogador();
+
+					do {
+						jog = JogadorDAO.getJogador(ev.getPlayer());
+					} while(jog==null);
+					JogadorDAO.checkDates(JogadorDAO.getJogador(ev.getPlayer()), ev.getPlayer());
+				} else {
+					JogadorDAO.setFirstData(ev.getPlayer());
+					JogadorDAO.givePrizes(ev.getPlayer(), config.getInt("prizes.day1.money"), config.getInt("prizes.day1.dust"), config.getInt("prizes.day1.box.qntd"), config.getInt("prizes.day1.box.lvl"));
+					MessagesManager.firstLogin(ev.getPlayer());
+				}
+			}
+			// Temporary
+		}catch(Exception e){
+			e.printStackTrace();
+		};
+
 	}
 }

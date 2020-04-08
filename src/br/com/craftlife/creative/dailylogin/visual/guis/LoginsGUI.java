@@ -20,16 +20,17 @@ public class LoginsGUI {
 	private final static FileConfiguration config = Main.getMain().getConfig();
 
 	public static void v1_15(Player p, int day) {
+		p.sendMessage(""+day);
 		Inventory gui = Bukkit.getServer().createInventory(p, 36, getString("guis.header.main"));
 		for (int i = 0;i<=gui.getSize()-1;i++) {
 			gui.setItem(i, Itens.itens_nl(Material.BLACK_STAINED_GLASS_PANE, " ", false));
 		}
-		gui.setItem(10, Itens.itens(Material.EMERALD_BLOCK, getString("guis.itens.day"+day), loreCreator(1, true), true));
-		gui.setItem(11, Itens.itens(getBlock(day, 2), getString("guis.itens.day"+day), loreCreator(2, day>=2 ? true : false), true));
-		gui.setItem(12, Itens.itens(getBlock(day, 3), getString("guis.itens.day"+day), loreCreator(3, day>=3 ? true : false), true));
-		gui.setItem(13, Itens.itens(getBlock(day, 4), getString("guis.itens.day"+day), loreCreator(4, day>=4 ? true : false), true));
-		gui.setItem(14, Itens.itens(getBlock(day, 5), getString("guis.itens.day"+day), loreCreator(5, day>=5 ? true : false), true));
-		gui.setItem(15, Itens.itens(getBlock(day, 6), getString("guis.itens.day"+day), loreCreator(6, day>=6 ? true : false), true));
+		gui.setItem(10, Itens.itens(Material.EMERALD_BLOCK, getString("guis.itens.day1"), loreCreator(1, true), true));
+		gui.setItem(11, Itens.itens(getBlock(day, 2), getString("guis.itens.day2"), loreCreator(2, day>=2 ? true : false), true));
+		gui.setItem(12, Itens.itens(getBlock(day, 3), getString("guis.itens.day3"), loreCreator(3, day>=3 ? true : false), true));
+		gui.setItem(13, Itens.itens(getBlock(day, 4), getString("guis.itens.day4"), loreCreator(4, day>=4 ? true : false), true));
+		gui.setItem(14, Itens.itens(getBlock(day, 5), getString("guis.itens.day5"), loreCreator(5, day>=5 ? true : false), true));
+		gui.setItem(15, Itens.itens(getBlock(day, 6), getString("guis.itens.day6"), loreCreator(6, day>=6 ? true : false), true));
 		gui.setItem(16, Itens.itens(Material.ENDER_EYE, getString("guis.itens.day7"), loreSeven(day>=7 ? true : false), true));
 		
 		ArrayList<String> lore = new ArrayList<>();
@@ -43,6 +44,7 @@ public class LoginsGUI {
 		lore.clear();
 		
 		gui.setItem(35, Itens.itens_nl(Material.BOOK, getString("guis.itens.about"), true));
+		p.openInventory(gui);
 	}
 	
 	public static ArrayList<String> loreCreator(int day, boolean received) {
@@ -84,6 +86,15 @@ public class LoginsGUI {
 			}
 		} else {
 			lore.add("§5No seu sétimo dia você ganhará:");
+			lore.add(" ");
+			lore.add("§2§o"+config.getInt("prizes.day7.money")+" Money");
+			lore.add("§c§o"+config.getInt("prizes.day7.dust")+" Dusts");
+			if (config.getInt("prizes.day7.box.qntd")>0) {
+				lore.add("§5§o"+config.getInt("prizes.day7.box.qntd")+" Caixas Misteriosas "+Util.StarsCheck(config.getInt("prizes.day7.box.lvl")));
+				if (config.getBoolean("prizes.day7.special.enable")) {
+					lore.add("§5§oAlém do prêmio especial!");
+				}
+			}
 		}
 		return lore;
 	}
