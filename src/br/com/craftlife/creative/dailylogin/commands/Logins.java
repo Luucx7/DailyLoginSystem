@@ -1,6 +1,9 @@
 package br.com.craftlife.creative.dailylogin.commands;
 
+import static br.com.craftlife.creative.dailylogin.core.DatesManager.localToDate;
+
 import java.io.File;
+import java.time.LocalDate;
 
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -22,6 +25,7 @@ public class Logins implements Listener, CommandExecutor {
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 		if (args.length==0 && sender instanceof Player) {
 			Player p = (Player) sender;
+			sender.sendMessage(JogadorDAO.getJogador(p).getDaysSequence()+"");
 			LoginsGUI.v1_15(p, JogadorDAO.getJogador(p).getDaysSequence());
 		}
 		else if (args[0].equalsIgnoreCase("check") && args.length>=2 && sender.hasPermission("logins.check")) {
@@ -34,9 +38,11 @@ public class Logins implements Listener, CommandExecutor {
 					
 					Jogador jog = new Jogador();
 					
-					do {
-						jog = JogadorDAO.getJogador(p);
-					} while(jog==null);
+					try {
+						do {
+							jog = JogadorDAO.getJogador(p);
+						} while(jog==null);
+					} catch(NullPointerException ex) {};
 					
 					sender.sendMessage("§b§l§m-------------§r  §8§lSistema de Login  §b§m-------------");
 					sender.sendMessage("");
@@ -55,6 +61,13 @@ public class Logins implements Listener, CommandExecutor {
 			} else {
 				sender.sendMessage("§cJogador não encontrado.");
 			}
+		} else if (args[0].equalsIgnoreCase("date")) {
+			sender.sendMessage("§5"+LocalDate.now());
+		} else if (args[0].equalsIgnoreCase("ontem")) {
+			sender.sendMessage("§4"+LocalDate.now().minusDays(1));
+		} else if (args[0].equalsIgnoreCase("debug")) {
+			Player p = (Player) sender;
+			sender.sendMessage(""+(localToDate(JogadorDAO.getJogador(p).getLastLogin()).equals(localToDate(LocalDate.now().minusDays(1)))));
 		}
 		return false;
 	}

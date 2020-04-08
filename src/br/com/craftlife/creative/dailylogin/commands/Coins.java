@@ -17,13 +17,14 @@ public class Coins implements CommandExecutor, Listener {
 	public boolean onCommand(CommandSender s, Command c, String arg, String[] args) {
 		if (args.length==0 && s instanceof Player) {
 			Player p = (Player) s;
-			s.sendMessage("§2Você possui "+JogadorDAO.getJogador(p).getCoins()+" coin(s).");
+			s.sendMessage("§2Você possui §a"+JogadorDAO.getJogador(p).getCoins()+" §2coin(s).");
 		}
 		else if (args[0].equalsIgnoreCase("set") && args.length>=2 && s.hasPermission("coins.set")) {
 			Player p = Bukkit.getPlayerExact(args[1]);
 			if (p!=null && Util.isNumeric(args[2])) {
 				Jogador jog = JogadorDAO.getJogador(p);
 				JogadorDAO.setData(p, jog.getLastLogin(), jog.getWeeksSequence(), jog.getDaysSequence(), Integer.parseInt(args[2]));
+				s.sendMessage("§2Definido para §a"+args[2]+" §2os coins para §a"+args[1]);
 			}
 		}
 		else if (args[0].equalsIgnoreCase("add") && args.length>=2 && s.hasPermission("coins.add")) {
@@ -31,6 +32,7 @@ public class Coins implements CommandExecutor, Listener {
 			if (p!=null && Util.isNumeric(args[2])) {
 				Jogador jog = JogadorDAO.getJogador(p);
 				JogadorDAO.setData(p, jog.getLastLogin(), jog.getWeeksSequence(), jog.getDaysSequence(), jog.getCoins()+Integer.parseInt(args[2]));
+				s.sendMessage("§2Adicionado §a"+args[2]+" §2coins para §a"+args[1]);
 			}
 		}
 		else if (args[0].equalsIgnoreCase("remove") && args.length>=2 && s.hasPermission("coins.remove")) {
@@ -44,6 +46,7 @@ public class Coins implements CommandExecutor, Listener {
 				}
 				
 				JogadorDAO.setData(p, jog.getLastLogin(), jog.getWeeksSequence(), jog.getDaysSequence(), newcoins);
+				s.sendMessage("§cRemovido §4"+args[2]+" §ccoin(s) de §4"+args[1]);
 			}
 		}
 		return false;
