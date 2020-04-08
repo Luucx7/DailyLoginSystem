@@ -13,37 +13,37 @@ prizes:
         dust: 100
         box:
             qntd: 1
-            lvl: 1
+            lvl: 2
     day3:
         money: 500
         dust: 100
         box:
             qntd: 1
-            lvl: 1
+            lvl: 3
     day4:
         money: 500
         dust: 100
         box:
             qntd: 1
-            lvl: 1
+            lvl: 4
     day5:
         money: 500
         dust: 100
         box:
             qntd: 1
-            lvl: 1
+            lvl: 5
     day6:
         money: 500
         dust: 100
         box:
             qntd: 1
-            lvl: 1
+            lvl: 5
     day7:
         money: 500
-        dust: 100
+        dust: 200
         box:
-            qntd: 1
-            lvl: 1
+            qntd: 2
+            lvl: 5
         special:
             enable: false
             text: ""
