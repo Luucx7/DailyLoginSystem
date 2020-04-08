@@ -1,0 +1,50 @@
+# Especificações dos prêmios por dia
+# Caso não queira o prêmio específico no dia, deixe em 0.
+# boxLvl será ignorada se boxQntd for 0.
+prizes:
+    day1:
+        money: 500
+        dust: 100
+        box:
+            qntd: 1
+            lvl: 1
+    day2:
+        money: 500
+        dust: 100
+        box:
+            qntd: 1
+            lvl: 1
+    day3:
+        money: 500
+        dust: 100
+        box:
+            qntd: 1
+            lvl: 1
+    day4:
+        money: 500
+        dust: 100
+        box:
+            qntd: 1
+            lvl: 1
+    day5:
+        money: 500
+        dust: 100
+        box:
+            qntd: 1
+            lvl: 1
+    day6:
+        money: 500
+        dust: 100
+        box:
+            qntd: 1
+            lvl: 1
+    day7:
+        money: 500
+        dust: 100
+        box:
+            qntd: 1
+            lvl: 1
+#
+# Configurações de mensagens
+#
+messages:

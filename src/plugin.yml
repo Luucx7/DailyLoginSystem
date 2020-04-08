@@ -1,0 +1,15 @@
+name: DailyLoginSystem
+version: 0.0.1-SNAPSHOT
+api-version: 1.15
+main: br.com.craftlife.creative.dailylogin.Main
+depend: [GadgetsMenu]
+author: Luucx7
+commands:
+    logins:
+        description: Sistema de login diário
+        permission: login.acessar
+        permission-message: "Você não tem permissão."
+    coins:
+        description: Veja a sua quantidade de coins,a moeda especial do servidor!
+        permission: coins.acessar
+        permission-message: "Você não tem permissão."
