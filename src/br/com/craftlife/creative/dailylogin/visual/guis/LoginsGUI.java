@@ -30,7 +30,7 @@ public class LoginsGUI {
 		gui.setItem(13, Itens.itens(getBlock(day, 4), getString("guis.itens.day4"), loreCreator(4, day>=4 ? true : false), true));
 		gui.setItem(14, Itens.itens(getBlock(day, 5), getString("guis.itens.day5"), loreCreator(5, day>=5 ? true : false), true));
 		gui.setItem(15, Itens.itens(getBlock(day, 6), getString("guis.itens.day6"), loreCreator(6, day>=6 ? true : false), true));
-		gui.setItem(16, Itens.itens(Material.ENDER_EYE, getString("guis.itens.day7"), loreSeven(day>=7 ? true : false), true));
+		gui.setItem(16, Itens.itens(day>=7 ? Material.ENDER_EYE : Material.ENDER_PEARL, getString("guis.itens.day7"), loreSeven(day>=7 ? true : false), true));
 
 		ArrayList<String> lore = new ArrayList<>();
 		lore.add("§5A cada semana completa");
