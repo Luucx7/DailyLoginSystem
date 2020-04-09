@@ -8,6 +8,7 @@ import java.lang.reflect.Type;
 import java.util.Map;
 
 import org.bukkit.Bukkit;
+import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -55,7 +56,7 @@ public class JSON {
 		}).start();
 	}
 
-	public void readJSON(String fileName, String subPath, String object, Player player, boolean prizes) {
+	public void readJSON(String fileName, String subPath, String object, Player player, boolean prizes, CommandSender sender) {
 		new Thread(new BukkitRunnable() {
 
 			@Override
@@ -78,13 +79,19 @@ public class JSON {
 					JogadorDAO.getJogadorData(player, map);
 					if (prizes) {
 						JogadorDAO.checkDates(JogadorDAO.getJogador(player), player);
+					} else {
+						MessagesManager.checkMsgs(sender, JogadorDAO.getJogador(player));
 					}
 				} catch (NullPointerException e) {
 					Bukkit.getConsoleSender().sendMessage("§7Log || §4ERRO§7: Resposta nula.");
 				} catch (FileNotFoundException e) {
-					JogadorDAO.setFirstData(player);
-					MessagesManager.firstLogin(player);
-					JogadorDAO.givePrizes(player, config.getInt("prizes.day1.money"), config.getInt("prizes.day1.dust"), config.getInt("prizes.day1.box.qntd"), config.getInt("prizes.day1.box.lvl"));
+					if (prizes) {
+						JogadorDAO.setFirstData(player);
+						MessagesManager.firstLogin(player);
+						JogadorDAO.givePrizes(player, config.getInt("prizes.day1.money"), config.getInt("prizes.day1.dust"), config.getInt("prizes.day1.box.qntd"), config.getInt("prizes.day1.box.lvl"));
+					} else {
+						sender.sendMessage("§4§lJogador não encontrado.");
+					}
 				} catch (Exception e) {
 					Bukkit.getConsoleSender().sendMessage("§7Log || §4ERRO§7: Erro desconhecido ou não tratado.");
 					e.printStackTrace();

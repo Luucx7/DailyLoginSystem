@@ -17,7 +17,7 @@ public class Login implements Listener {
 		try {
 			if (ev.getPlayer().hasPermission("logins.receive")) {
 				JSON json = new JSON();
-				json.readJSON(ev.getPlayer().getName(), File.separator+"player_data"+File.separator, ev.getPlayer().getName(), ev.getPlayer(), true);
+				json.readJSON(ev.getPlayer().getName(), File.separator+"player_data"+File.separator, ev.getPlayer().getName(), ev.getPlayer(), true, null);
 			}
 		}catch(Exception e){
 			e.printStackTrace();

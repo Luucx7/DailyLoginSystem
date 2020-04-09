@@ -1,9 +1,11 @@
 package br.com.craftlife.creative.dailylogin.core;
 
+import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 
 import br.com.craftlife.creative.dailylogin.Main;
+import br.com.craftlife.creative.dailylogin.core.model.Jogador;
 
 public class MessagesManager {
 	
@@ -60,6 +62,20 @@ public class MessagesManager {
 		}
 		p.sendMessage("§cVocê ficou um tempo sem logar e");
 		p.sendMessage("§cperdeu sua sequência de dias :c");
+	}
+	
+	public static void checkMsgs(CommandSender p, Jogador jog) {
+		p.sendMessage("§b§l§m-------------§r  §8§lSistema de Login  §b§m-------------");
+		p.sendMessage("");
+		p.sendMessage("§bJogador Verificado: §e"+jog.getPlayer().getName());
+		p.sendMessage("");
+		p.sendMessage("§bDias: §e"+jog.getDaysSequence());
+		p.sendMessage("§bSemanas: §e"+jog.getWeeksSequence());
+		p.sendMessage("§bÚltimo Login: §e"+jog.getLastLogin());
+		p.sendMessage("");
+		p.sendMessage("§bCoins: §e"+jog.getCoins());
+		p.sendMessage("");
+		p.sendMessage("§b§l§m-----------------------------------------");
 	}
 	
 	public static void emptyLines(Player p) {
