@@ -20,7 +20,6 @@ public class LoginsGUI {
 	private final static FileConfiguration config = Main.getMain().getConfig();
 
 	public static void v1_15(Player p, int day) {
-		p.sendMessage(""+day);
 		Inventory gui = Bukkit.getServer().createInventory(p, 36, getString("guis.header.main"));
 		for (int i = 0;i<=gui.getSize()-1;i++) {
 			gui.setItem(i, Itens.itens_nl(Material.BLACK_STAINED_GLASS_PANE, " ", false));
@@ -32,7 +31,7 @@ public class LoginsGUI {
 		gui.setItem(14, Itens.itens(getBlock(day, 5), getString("guis.itens.day5"), loreCreator(5, day>=5 ? true : false), true));
 		gui.setItem(15, Itens.itens(getBlock(day, 6), getString("guis.itens.day6"), loreCreator(6, day>=6 ? true : false), true));
 		gui.setItem(16, Itens.itens(Material.ENDER_EYE, getString("guis.itens.day7"), loreSeven(day>=7 ? true : false), true));
-		
+
 		ArrayList<String> lore = new ArrayList<>();
 		lore.add("§5A cada semana completa");
 		lore.add("§5você irá ganhar 1 coin.");
@@ -42,11 +41,11 @@ public class LoginsGUI {
 		lore.add("§aVeja seus coins com /coins");
 		gui.setItem(27, Itens.itens(Material.NETHER_STAR, getString("guis.itens.super"), lore, true));
 		lore.clear();
-		
+
 		gui.setItem(35, Itens.itens_nl(Material.BOOK, getString("guis.itens.about"), true));
 		p.openInventory(gui);
 	}
-	
+
 	public static ArrayList<String> loreCreator(int day, boolean received) {
 		ArrayList<String> lore = new ArrayList<>();
 		if (received) {
@@ -69,7 +68,7 @@ public class LoginsGUI {
 		}
 		return lore;
 	}
-	
+
 	public static ArrayList<String> loreSeven(boolean received) {
 		ArrayList<String> lore = new ArrayList<>();
 		if (received) {
@@ -98,7 +97,7 @@ public class LoginsGUI {
 		}
 		return lore;
 	}
-	
+
 	public static Material getBlock(int day, int req) {
 		if (day>=req) {
 			return Material.EMERALD_BLOCK;
