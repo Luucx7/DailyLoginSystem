@@ -25,7 +25,6 @@ public class Logins implements Listener, CommandExecutor {
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 		if (args.length==0 && sender instanceof Player) {
 			Player p = (Player) sender;
-			sender.sendMessage(JogadorDAO.getJogador(p).getDaysSequence()+"");
 			LoginsGUI.v1_15(p, JogadorDAO.getJogador(p).getDaysSequence());
 		}
 		else if (args[0].equalsIgnoreCase("check") && args.length>=2 && sender.hasPermission("logins.check")) {
@@ -34,7 +33,7 @@ public class Logins implements Listener, CommandExecutor {
 				File f = new File(pluginFolder + File.separator+"player_data"+File.separator + p.getName() + ".json"); 
 				if(f.exists() && f.isFile()) {
 					JSON json = new JSON();
-					json.readJSON(p.getName(), File.separator+"player_data"+File.separator, p.getName());
+					json.readJSON(p.getName(), File.separator+"player_data"+File.separator, p.getName(), p, false);
 					
 					Jogador jog = new Jogador();
 					

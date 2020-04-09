@@ -8,6 +8,8 @@ import java.lang.reflect.Type;
 import java.util.Map;
 
 import org.bukkit.Bukkit;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -16,11 +18,13 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import br.com.craftlife.creative.dailylogin.Main;
+import br.com.craftlife.creative.dailylogin.core.MessagesManager;
 import br.com.craftlife.creative.dailylogin.core.model.JogadorDAO;
 
 public class JSON {
 
 	private String pluginFolder = Main.getMain().pluginFolder;
+	private final static FileConfiguration config = Main.getMain().getConfig();
 
 	@SuppressWarnings("unchecked")
 	public void writeJSON(String fileName, String subPath, String object, String value) {
@@ -51,7 +55,7 @@ public class JSON {
 		}).start();
 	}
 
-	public void readJSON(String fileName, String subPath, String object) {
+	public void readJSON(String fileName, String subPath, String object, Player player, boolean prizes) {
 		new Thread(new BukkitRunnable() {
 
 			@Override
@@ -71,11 +75,16 @@ public class JSON {
 					Type type = new TypeToken<Map<String, String>>(){}.getType();
 					Map<String, String> map = gson.fromJson(var, type);
 
-					JogadorDAO.getJogadorData(fileName, map);
+					JogadorDAO.getJogadorData(player, map);
+					if (prizes) {
+						JogadorDAO.checkDates(JogadorDAO.getJogador(player), player);
+					}
 				} catch (NullPointerException e) {
 					Bukkit.getConsoleSender().sendMessage("§7Log || §4ERRO§7: Resposta nula.");
 				} catch (FileNotFoundException e) {
-					Bukkit.getConsoleSender().sendMessage("§7Log || §4SEVERE§7: Arquivo não encontrado.");
+					JogadorDAO.setFirstData(player);
+					MessagesManager.firstLogin(player);
+					JogadorDAO.givePrizes(player, config.getInt("prizes.day1.money"), config.getInt("prizes.day1.dust"), config.getInt("prizes.day1.box.qntd"), config.getInt("prizes.day1.box.lvl"));
 				} catch (Exception e) {
 					Bukkit.getConsoleSender().sendMessage("§7Log || §4ERRO§7: Erro desconhecido ou não tratado.");
 					e.printStackTrace();

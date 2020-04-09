@@ -36,8 +36,8 @@ prizes:
         money: 500
         dust: 100
         box:
-            qntd: 1
-            lvl: 5
+            qntd: 0
+            lvl: 1
     day7:
         money: 500
         dust: 200

@@ -1,8 +1,8 @@
 name: DailyLoginSystem
-version: 0.1.22
+version: 1.0
 api-version: 1.15
 main: br.com.craftlife.creative.dailylogin.Main
-depend: [GadgetsMenu]
+depend: [GadgetsMenu, Vault]
 author: Luucx7
 commands:
     logins:

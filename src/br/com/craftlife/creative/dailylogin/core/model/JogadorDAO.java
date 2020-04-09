@@ -52,19 +52,21 @@ public class JogadorDAO {
 		JSONObject obj = new JSONObject();
 		Jogador jog = new Jogador();
 
-		obj.put("lastLogin", lastLogin);
-		obj.put("weeks", weeks);
-		obj.put("days", days);
-		obj.put("coins", coins);
-		json.writeJSON(player.getName(), File.separator+"player_data"+File.separator, player.getName(), obj.toJSONString());
 
 		jog = getJogador(player);
 		jog.setDaysSequence(days);
 		jog.setLastLogin(lastLogin);
 		jog.setWeeksSequence(weeks);
 		jog.setCoins(coins);
+		
+		obj.put("lastLogin", lastLogin);
+		obj.put("weeks", weeks);
+		obj.put("days", days);
+		obj.put("coins", coins);
+		
 
 		Main.jogadores.put(player.getName(), jog);
+		json.writeJSON(player.getName(), File.separator+"player_data"+File.separator, player.getName(), obj.toJSONString());
 	}
 
 	// Simple method to reset the player data
@@ -78,15 +80,17 @@ public class JogadorDAO {
 	}
 
 	// Getting player data of files
-	public static void getJogadorData(String player, Map<String, String> map) {
+	public static void getJogadorData(Player player, Map<String, String> map) {
 		Jogador jog = new Jogador();
 
-		jog.setDaysSequence(Integer.parseInt(map.get("weeks")));
+		jog.setWeeksSequence(Integer.parseInt(map.get("weeks")));
 		jog.setDaysSequence(Integer.parseInt(map.get("days")));
 		jog.setLastLogin(LocalDate.parse(map.get("lastLogin")));
 		jog.setCoins(Integer.parseInt(map.get("coins")));
+		jog.setPlayer(player);
+		jog.setNick(player.getName());
 
-		Main.jogadores.put(player, jog);
+		Main.jogadores.put(player.getName(), jog);
 	}
 
 	// Getting player data from memory
@@ -110,7 +114,7 @@ public class JogadorDAO {
 
 		// Check if player log in today
 		if (DateUtils.isSameDay(localToDate(jog.getLastLogin()), localToDate(LocalDate.now()))) {
-			MessagesManager.prizeAlreadyReceived(jog.getPlayer());
+			MessagesManager.prizeAlreadyReceived(p);
 		}
 
 		// Check if player logged in yesterday
@@ -119,30 +123,34 @@ public class JogadorDAO {
 			int weeks = jog.getWeeksSequence();
 			int coins = jog.getCoins();
 			switch(newdays) {
+			case 7:
+				calcPrizes(jog, 7);
+				weeks=weeks+1;
+				coins=coins+1;
+				break;
 			case 8:
 				calcPrizes(jog, 1);
 				newdays=1;
-				weeks=weeks+1;
-				coins=coins+1;
+				break;
 			default:
 				calcPrizes(jog, newdays);
+				break;
 			}
-			jog.setLastLogin(LocalDate.now());
 			setData(jog.getPlayer(), LocalDate.now(), weeks, newdays, coins);
-			MessagesManager.loginMsg(jog.getPlayer(), jog.getDaysSequence());
+			MessagesManager.loginMsg(p, newdays);
 		} 
 
 		// If not, reset
 		else {
 			resetStreak(jog);
 			JogadorDAO.givePrizes(jog.getPlayer(), config.getInt("prizes.day1.money"), config.getInt("prizes.day1.dust"), config.getInt("prizes.day1.box.qntd"), config.getInt("prizes.day1.box.lvl"));
-			MessagesManager.streakFailed(jog.getPlayer());
+			MessagesManager.streakFailed(p);
 		}
 	}
 
 	// Calculate the prizes to give
 	public static void calcPrizes(Jogador jog, int days) {
-		givePrizes(jog.getPlayer(), config.getInt("prizes.day"+days+".money"), config.getInt("prizes.day"+days+"dust"), config.getInt("prizes.day"+days+".box.qntd"), config.getInt("prizes.day"+days+".box.lvl"));
+		givePrizes(jog.getPlayer(), config.getInt("prizes.day"+days+".money"), config.getInt("prizes.day"+days+".dust"), config.getInt("prizes.day"+days+".box.qntd"), config.getInt("prizes.day"+days+".box.lvl"));
 		if (days>=7 & config.getBoolean("prizes.day7.special.enable")) {
 			Bukkit.dispatchCommand(Bukkit.getConsoleSender(), config.getString("prizes.day7.special.command"));
 		}
@@ -150,31 +158,39 @@ public class JogadorDAO {
 
 	// Prizes method
 	public static void givePrizes(Player p, int money, int dust, int boxQntd, int boxLvl) {
-		if (money>0) {
-			Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "money give "+p.getName()+" "+money);
-		} 
-		if (dust>0) {
-			GadgetsMenuAPI.getPlayerManager(p).addMysteryDust(dust);
-		}
-		if (boxQntd>0) {
-
-			MysteryBoxType lvl = null;
-			switch(boxLvl) {
-			case 1:
-				lvl=MysteryBoxType.NORMAL_MYSTERY_BOX_1;
-			case 2:
-				lvl=MysteryBoxType.NORMAL_MYSTERY_BOX_2;
-			case 3:
-				lvl=MysteryBoxType.NORMAL_MYSTERY_BOX_3;
-			case 4:
-				lvl=MysteryBoxType.NORMAL_MYSTERY_BOX_4;
-			case 5:
-				lvl=MysteryBoxType.NORMAL_MYSTERY_BOX_5;
-			default:
-				lvl=MysteryBoxType.NORMAL_MYSTERY_BOX_1;
+		Bukkit.getServer().getScheduler().runTaskLater(Main.getMain(),() -> {
+			if (money>0) {
+				Main.econ.depositPlayer(p, money);
+			} 
+			if (dust>0) {
+				GadgetsMenuAPI.getPlayerManager(p).addMysteryDust(dust);
 			}
+			if (boxQntd>0) {
 
-			GadgetsMenuAPI.getPlayerManager(p).giveMysteryBoxes(lvl, null, false, null, boxQntd);
-		}
+				MysteryBoxType lvl = null;
+				switch(boxLvl) {
+				case 1:
+					lvl=MysteryBoxType.NORMAL_MYSTERY_BOX_1;
+					break;
+				case 2:
+					lvl=MysteryBoxType.NORMAL_MYSTERY_BOX_2;
+					break;
+				case 3:
+					lvl=MysteryBoxType.NORMAL_MYSTERY_BOX_3;
+					break;
+				case 4:
+					lvl=MysteryBoxType.NORMAL_MYSTERY_BOX_4;
+					break;
+				case 5:
+					lvl=MysteryBoxType.NORMAL_MYSTERY_BOX_5;
+					break;
+				default:
+					lvl=MysteryBoxType.NORMAL_MYSTERY_BOX_1;
+					break;
+				}
+
+				GadgetsMenuAPI.getPlayerManager(p).giveMysteryBoxes(lvl, null, false, null, boxQntd);
+			}
+		}, 0);
 	}
 }
