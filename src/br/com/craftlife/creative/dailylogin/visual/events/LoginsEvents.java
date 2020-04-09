@@ -9,6 +9,12 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 
 import br.com.craftlife.creative.dailylogin.Main;
 import br.com.craftlife.creative.dailylogin.core.Util;
+import br.com.craftlife.creative.dailylogin.core.model.JogadorDAO;
+import br.com.craftlife.creative.dailylogin.visual.guis.AboutGUI;
+import br.com.craftlife.creative.dailylogin.visual.guis.LoginsGUI;
+
+import static br.com.craftlife.creative.dailylogin.core.Util.gui_item;
+import static br.com.craftlife.creative.dailylogin.core.Util.getString;
 
 @SuppressWarnings("unused")
 public class LoginsEvents implements Listener {
@@ -30,6 +36,12 @@ public class LoginsEvents implements Listener {
             }
 			
 			// Itens
+			if (gui_item(e, getString("guis.itens.about"))) {
+				AboutGUI.v1_15(p);
+			}
+			if (gui_item(e, "§c§lVoltar")) {
+				LoginsGUI.v1_15(p, JogadorDAO.getJogador(p).getDaysSequence());
+			}
 		}
 	}
 }

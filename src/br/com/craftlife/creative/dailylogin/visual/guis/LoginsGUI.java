@@ -42,7 +42,9 @@ public class LoginsGUI {
 		gui.setItem(27, Itens.itens(Material.NETHER_STAR, getString("guis.itens.super"), lore, true));
 		lore.clear();
 
-		gui.setItem(35, Itens.itens_nl(Material.BOOK, getString("guis.itens.about"), true));
+		lore.add("§8Clique aqui para mais informações.");
+		gui.setItem(35, Itens.itens(Material.BOOK, getString("guis.itens.about"), lore, true));
+		lore.clear();
 		p.openInventory(gui);
 	}
 

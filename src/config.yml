@@ -3,44 +3,44 @@
 # boxLvl será ignorada se boxQntd for 0.
 prizes:
     day1:
-        money: 500
-        dust: 100
+        money: 150
+        dust: 15
         box:
-            qntd: 1
+            qntd: 0
             lvl: 1
     day2:
-        money: 500
-        dust: 100
+        money: 200
+        dust: 25
+        box:
+            qntd: 0
+            lvl: 2
+    day3:
+        money: 250
+        dust: 50
         box:
             qntd: 1
             lvl: 2
-    day3:
-        money: 500
-        dust: 100
-        box:
-            qntd: 1
-            lvl: 3
     day4:
-        money: 500
-        dust: 100
+        money: 300
+        dust: 80
         box:
-            qntd: 1
+            qntd: 0
             lvl: 4
     day5:
-        money: 500
+        money: 350
         dust: 100
         box:
-            qntd: 1
+            qntd: 0
             lvl: 5
     day6:
-        money: 500
+        money: 400
         dust: 100
         box:
             qntd: 0
             lvl: 1
     day7:
-        money: 500
-        dust: 200
+        money: 800
+        dust: 250
         box:
             qntd: 2
             lvl: 5
