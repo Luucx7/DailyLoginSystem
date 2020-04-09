@@ -152,7 +152,11 @@ public class JogadorDAO {
 	public static void calcPrizes(Jogador jog, int days) {
 		givePrizes(jog.getPlayer(), config.getInt("prizes.day"+days+".money"), config.getInt("prizes.day"+days+".dust"), config.getInt("prizes.day"+days+".box.qntd"), config.getInt("prizes.day"+days+".box.lvl"));
 		if (days>=7 & config.getBoolean("prizes.day7.special.enable")) {
-			Bukkit.dispatchCommand(Bukkit.getConsoleSender(), config.getString("prizes.day7.special.command"));
+			Bukkit.getServer().getScheduler().runTaskLater(Main.getMain(),() -> {
+				String command = config.getString("prizes.day7.special.command");
+				String cmd = command.replace("%player%", jog.getPlayer().getName());
+				Bukkit.dispatchCommand(Bukkit.getConsoleSender(), cmd);
+			}, 0);
 		}
 	}
 

@@ -1,5 +1,5 @@
 name: DailyLoginSystem
-version: 1.0
+version: 1.0.3
 api-version: 1.15
 main: br.com.craftlife.creative.dailylogin.Main
 depend: [GadgetsMenu, Vault]
