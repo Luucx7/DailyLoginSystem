@@ -9,6 +9,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 
+import br.com.craftlife.creative.dailylogin.Main;
 import br.com.craftlife.creative.dailylogin.core.json.JSON;
 import br.com.craftlife.creative.dailylogin.core.model.JogadorDAO;
 import br.com.craftlife.creative.dailylogin.visual.guis.LoginsGUI;
@@ -28,6 +29,9 @@ public class Logins implements Listener, CommandExecutor {
 			} else {
 				sender.sendMessage("§cJogador não encontrado.");
 			}
+		}
+		else if (args[0].equalsIgnoreCase("debug")) {
+			sender.sendMessage(""+Main.GMenu);
 		}
 		return false;
 	}

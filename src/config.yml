@@ -1,3 +1,8 @@
+# Opção de usar prêmios do GadgetsMenu
+# Como poeira e caixas
+# false caso não deseje.
+use_gmenu: true
+
 # Especificações dos prêmios por dia
 # Caso não queira o prêmio específico no dia, deixe em 0.
 # boxLvl será ignorada se boxQntd for 0.
@@ -47,10 +52,12 @@ prizes:
         special:
             enable: false
             text: ""
+            # Comando que o console executará no sétimo dia de login
+            # Especifique o jogador com %player%
             command: ""
 #
-# Configurações de mensagens
-#   Não funcionando ainda
+#Configurações de mensagens
+#Nem todas estão aqui ainda!
 #messages:
     
 #

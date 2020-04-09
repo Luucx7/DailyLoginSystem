@@ -12,10 +12,8 @@ import org.bukkit.craftbukkit.libs.org.apache.commons.lang3.time.DateUtils;
 import org.bukkit.entity.Player;
 import org.json.simple.JSONObject;
 
-import com.yapzhenyie.GadgetsMenu.api.GadgetsMenuAPI;
-import com.yapzhenyie.GadgetsMenu.utils.mysteryboxes.MysteryBoxType;
-
 import br.com.craftlife.creative.dailylogin.Main;
+import br.com.craftlife.creative.dailylogin.core.GadgetsMenuPrizes;
 import br.com.craftlife.creative.dailylogin.core.MessagesManager;
 import br.com.craftlife.creative.dailylogin.core.json.JSON;
 
@@ -152,49 +150,30 @@ public class JogadorDAO {
 	public static void calcPrizes(Jogador jog, int days) {
 		givePrizes(jog.getPlayer(), config.getInt("prizes.day"+days+".money"), config.getInt("prizes.day"+days+".dust"), config.getInt("prizes.day"+days+".box.qntd"), config.getInt("prizes.day"+days+".box.lvl"));
 		if (days>=7 & config.getBoolean("prizes.day7.special.enable")) {
+			
+			// Execute on main thread (Mandatory)
 			Bukkit.getServer().getScheduler().runTaskLater(Main.getMain(),() -> {
 				String command = config.getString("prizes.day7.special.command");
 				String cmd = command.replace("%player%", jog.getPlayer().getName());
 				Bukkit.dispatchCommand(Bukkit.getConsoleSender(), cmd);
 			}, 0);
+			//
 		}
 	}
 
 	// Prizes method
 	public static void givePrizes(Player p, int money, int dust, int boxQntd, int boxLvl) {
+		
+		// Execute on main thread for safety
 		Bukkit.getServer().getScheduler().runTaskLater(Main.getMain(),() -> {
 			if (money>0) {
 				Main.econ.depositPlayer(p, money);
 			} 
-			if (dust>0) {
-				GadgetsMenuAPI.getPlayerManager(p).addMysteryDust(dust);
-			}
-			if (boxQntd>0) {
-
-				MysteryBoxType lvl = null;
-				switch(boxLvl) {
-				case 1:
-					lvl=MysteryBoxType.NORMAL_MYSTERY_BOX_1;
-					break;
-				case 2:
-					lvl=MysteryBoxType.NORMAL_MYSTERY_BOX_2;
-					break;
-				case 3:
-					lvl=MysteryBoxType.NORMAL_MYSTERY_BOX_3;
-					break;
-				case 4:
-					lvl=MysteryBoxType.NORMAL_MYSTERY_BOX_4;
-					break;
-				case 5:
-					lvl=MysteryBoxType.NORMAL_MYSTERY_BOX_5;
-					break;
-				default:
-					lvl=MysteryBoxType.NORMAL_MYSTERY_BOX_1;
-					break;
-				}
-
-				GadgetsMenuAPI.getPlayerManager(p).giveMysteryBoxes(lvl, null, false, null, boxQntd);
+			
+			if (Main.GMenu) {
+				GadgetsMenuPrizes.give(p, dust, boxQntd, boxLvl);
 			}
 		}, 0);
+		//
 	}
 }

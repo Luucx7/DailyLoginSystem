@@ -21,6 +21,7 @@ public class Main extends JavaPlugin implements Listener {
 	
 	public static HashMap<String, Jogador> jogadores = new HashMap<>();
 	
+	public static boolean GMenu = false;
 	public String pluginFolder = getDataFolder().getAbsolutePath();
 	
 	public static Economy econ = null;
@@ -33,10 +34,16 @@ public class Main extends JavaPlugin implements Listener {
 		
 		// Importing Vault
 		if (!setupEconomy() ) {
-            log.severe(String.format("[%s] - Disabled due to no Vault dependency found!", getDescription().getName()));
+            log.severe(String.format("[%s] - Desativado pois a dependência Vault não foi encontrada!", getDescription().getName()));
             getServer().getPluginManager().disablePlugin(this);
             return;
         }
+		
+		// Checking if should use GadgetsMenu
+		if (getServer().getPluginManager().getPlugin("GadgetsMenu")!=null && getConfig().getBoolean("use_gmenu")) {
+			GMenu=true;
+			Bukkit.getConsoleSender().sendMessage("[DailyLoginSystem] GadgetsMenu found, enabling GMenu prizes system.");
+		}
 		
 		// Commands
 		this.getCommand("logins").setExecutor(new Logins());

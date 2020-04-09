@@ -55,7 +55,7 @@ public class AboutGUI {
 		lore.add(" ");
 		lore.add("§8Versão: §7"+Bukkit.getServer().getPluginManager().getPlugin("DailyLoginSystem").getDescription().getVersion());
 		lore.add("§8Autor: §7Luucx7");
-		gui.setItem(35, Itens.itens(Material.BOOK, "§8§lSobre o Sistema", lore, false));
+		gui.setItem(35, Itens.itens(Material.BOOK, "§8§lSobre o Plugin", lore, false));
 		lore.clear();
 		
 		p.openInventory(gui);

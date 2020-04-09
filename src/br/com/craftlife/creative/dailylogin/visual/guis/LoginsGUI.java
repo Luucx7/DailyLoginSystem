@@ -52,20 +52,28 @@ public class LoginsGUI {
 		ArrayList<String> lore = new ArrayList<>();
 		if (received) {
 			lore.add("§5Este é seu "+cardinal(day)+" dia de login!");
-			if (!(config.getInt("prizes.day"+day+".box.qntd")==0)) {
+			
+			if ( (!(config.getInt("prizes.day"+day+".box.qntd")==0)) && Main.GMenu) {
 				lore.add("§5Além de §r§o§2"+config.getInt("prizes.day"+day+".money")+"$ §r§5e §c§o"+config.getInt("prizes.day"+day+".dust")+" Dusts");
 				lore.add("§5Você também ganhou ");
 				lore.add("§5§o"+config.getInt("prizes.day"+day+".box.qntd")+" Caixa Misteriosa "+Util.StarsCheck(config.getInt("prizes.day"+day+".box.lvl")));
-			} else {
+			} else if (Main.GMenu){
 				lore.add("§5Você ganhou §r§2§o"+config.getInt("prizes.day"+day+".money")+"$ §r§5e §c§o"+config.getInt("prizes.day"+day+".dust")+"§5 Dusts");
+			
+			} else {
+				lore.add("§5Você ganhou §r§2§o"+config.getInt("prizes.day"+day+".money")+"$");
 			}
 		} else {
 			lore.add("§5No seu "+cardinal(day)+" dia você ganhará:");
-			if (!(config.getInt("prizes.day"+day+".box.qntd")==0)) {
+			
+			if ((!(config.getInt("prizes.day"+day+".box.qntd")==0)) && Main.GMenu) {
 				lore.add("§2§o"+config.getInt("prizes.day"+day+".money")+"$§r§5, §c§o"+config.getInt("prizes.day"+day+".dust")+" Dusts §r§5e");
 				lore.add("§5§o"+config.getInt("prizes.day"+day+".box.qntd")+" Caixa Misteriosa "+Util.StarsCheck(config.getInt("prizes.day"+day+".box.lvl")));
-			} else {
+			} else  if (Main.GMenu){
 				lore.add("§2§o"+config.getInt("prizes.day"+day+".money")+"$§r§5 e §c§o"+config.getInt("prizes.day"+day+".dust")+" Dusts");
+			
+			} else {
+				lore.add("§2§o"+config.getInt("prizes.day"+day+".money")+"$");
 			}
 		}
 		return lore;
@@ -78,23 +86,31 @@ public class LoginsGUI {
 			lore.add("§5Como prêmio especial você ganhou:");
 			lore.add(" ");
 			lore.add("§2§o"+config.getInt("prizes.day7.money")+" Money");
-			lore.add("§c§o"+config.getInt("prizes.day7.dust")+" Dusts");
-			if (config.getInt("prizes.day7.box.qntd")>0) {
-				lore.add("§5§o"+config.getInt("prizes.day7.box.qntd")+" Caixas Misteriosas "+Util.StarsCheck(config.getInt("prizes.day7.box.lvl")));
-				if (config.getBoolean("prizes.day7.special.enable")) {
-					lore.add(Util.getString("prizes.day7.special.text"));
+			
+			if (Main.GMenu) {
+				lore.add("§c§o"+config.getInt("prizes.day7.dust")+" Dusts");
+				if (config.getInt("prizes.day7.box.qntd")>0) {
+					lore.add("§5§o"+config.getInt("prizes.day7.box.qntd")+" Caixas Misteriosas "+Util.StarsCheck(config.getInt("prizes.day7.box.lvl")));
 				}
+			}
+			
+			if (config.getBoolean("prizes.day7.special.enable")) {
+				lore.add(Util.getString("prizes.day7.special.text"));
 			}
 		} else {
 			lore.add("§5No seu sétimo dia você ganhará:");
 			lore.add(" ");
 			lore.add("§2§o"+config.getInt("prizes.day7.money")+" Money");
-			lore.add("§c§o"+config.getInt("prizes.day7.dust")+" Dusts");
-			if (config.getInt("prizes.day7.box.qntd")>0) {
-				lore.add("§5§o"+config.getInt("prizes.day7.box.qntd")+" Caixas Misteriosas "+Util.StarsCheck(config.getInt("prizes.day7.box.lvl")));
-				if (config.getBoolean("prizes.day7.special.enable")) {
-					lore.add("§5§oAlém do prêmio especial!");
+			
+			if (Main.GMenu) {
+				lore.add("§c§o"+config.getInt("prizes.day7.dust")+" Dusts");
+				if (config.getInt("prizes.day7.box.qntd")>0) {
+					lore.add("§5§o"+config.getInt("prizes.day7.box.qntd")+" Caixas Misteriosas "+Util.StarsCheck(config.getInt("prizes.day7.box.lvl")));
 				}
+			}
+			
+			if (config.getBoolean("prizes.day7.special.enable")) {
+				lore.add("§5§oAlém do prêmio especial!");
 			}
 		}
 		return lore;
