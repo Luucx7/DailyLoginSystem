@@ -43,7 +43,7 @@ public class LoginsGUI {
 		lore.clear();
 
 		lore.add("§8Clique aqui para mais informações.");
-		gui.setItem(35, Itens.itens(Material.BOOK, getString("guis.itens.about"), lore, true));
+		gui.setItem(35, Itens.itens(Material.BOOK, getString("guis.itens.about"), lore, false));
 		lore.clear();
 		p.openInventory(gui);
 	}
